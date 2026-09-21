@@ -6,7 +6,7 @@ pipeline {
         stage('clone') {
             steps {
                 git branch: 'main',
-                credentialsId: 'github-token',
+                credentialsId: 'git-token',
                 url: 'https://github.com/bharti7-star/static-website.git'    
             }
         }
