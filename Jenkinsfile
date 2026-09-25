@@ -7,7 +7,7 @@ pipeline {
             steps {
                 git branch: 'main',
                 credentialsId: 'new',
-                url: 'https://github.com/bharti7-star/static-website.git'    
+                url: 'https://github.com/Bharti7-star/EasyCRUD.git'    
             }
         }
         stage('Build') {
