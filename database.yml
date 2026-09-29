@@ -1,1 +1,93 @@
 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+  5 spec:
+  6   replicas: 1
+  7   selector:
+      containers:
+      - name: backend
+  7   selector:
+        image: bharti78/backend:latest
+
+        ports:
+          - containerPort: 8080
+        
+        env: 
+         - name: SPRING_DATASOURCE_URL
+           value: "jdbc:mysql://mysql-service:3306/student_app"
+
+         - name: SPRING_DATASOURCE_USERNAME
+           value: "root"
+         
+         - name: SPRING_DATASOURCE_PASSWORD
+           value: "linux"
+
+
+---
+apiVersion: v1
+kind: Service
+metadata: 
+ name: backend-service
+spec: 
+  selector:
+    app: backend
+  ports:
+    - port: 8080
+      targetPort: 8080
+  type: ClusterIP    
+
+~ $ vi backend.yml                                                                                                                                                                                                          
+~ $ vi db.yml
+~ $ 
+~ $ cat  db.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+ name: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dev
+  template:
+    metadata:
+      labels:
+        app: dev
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          ports:
+            - containerPort: 3306
+          env: 
+           - name: MYSQL_ROOT_PASSWORD
+             value: "linux"
+           - name: MYSQL_DATABASE
+             value: "student_app" 
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+spec: 
+  selector:
+   app: dev
+  ports:
+    - port: 3306
+      targetPort: 3306
+  type: ClusterIP
